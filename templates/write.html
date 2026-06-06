@@ -1,0 +1,24 @@
+{% extends 'index.html' %} {% load static %}
+<!doctype html>
+{% block content %}
+<main class="write-container" style="padding: 40px; max-width: 800px; margin: 0 auto;">
+    <header class="write-header">
+        <h2>{% if edit %}Edit Your Story{% else %}Draft Your Story{% endif %}</h2>
+        <p>Share your perspective with the AfriBlog community.</p>
+    </header>
+
+    <form method="POST" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+                Publish Article
+            </button>
+        </div>
+    </form>
+</main>
+{% endblock %}

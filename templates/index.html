@@ -1,0 +1,113 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AfriBlog - Premium African Stories</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+
+  <body>
+    <header class="main-header">
+      <div class="logo">AfriBlog</div>
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'categories' %}">Categories</a></li>
+          <li><a href="{% url 'write' %}" class="btn btn-primary active">Write</a></li>
+
+          {% if user.is_authenticated %}
+          <li>
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline">Logout</button>
+            </form>
+          </li>
+          {% else %}
+          <li><a href="{% url 'login' %}" class="btn btn-outline">Login</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      <button id="theme-toggle" class="btn btn-outline">
+        <span class="icon">🌙</span> Dark Mode
+      </button>
+    </header>
+
+    <main>
+      {% block content %}
+      <section class="hero-featured">
+        <figure class="hero-image-wrapper">
+          <img src="{% static 'images/hero-reading.jpg' %}" alt="African woman reading a book" />
+        </figure>
+        <div class="hero-content">
+          <span class="category-chip featured-chip">Featured</span>
+          <h1>The Renaissance of African Literature in the Digital Age</h1>
+          <div class="meta-info">
+            <span class="author">By Opeyemi Lawrence</span>
+            <span class="read-time"> • 8 min read</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="latest-articles">
+        <h2>Latest Stories</h2>
+        <div class="article-grid">
+          {% for post in page_obj %}
+          <article class="article-card">
+            <a href="{{ post.get_absolute_url }}">
+              <figure class="card-thumbnail">
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" />
+                {% else %}
+                <div class="placeholder-thumbnail"><span>No Image</span></div>
+                {% endif %}
+              </figure>
+            </a>
+            <div class="card-content">
+              <span class="category-chip">{{ post.category.name }}</span>
+              <a href="{{ post.get_absolute_url }}">
+                <h2>{{ post.title }}</h2>
+              </a>
+              <p class="excerpt">{{ post.excerpt }}</p>
+              <div class="card-footer">
+                <span class="author-name">{{ post.author.username }}</span>
+                <time>{{ post.created_on|date:"M d, Y" }}</time>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+
+        <div class="pagination">
+          {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}" class="btn">← Previous</a>
+          {% endif %}
+
+          <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+          {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="btn">Next →</a>
+          {% endif %}
+        </div>
+      </section>
+      {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-logo">AfriBlog</div>
+        <p>&copy; 2026 AfriBlog. Amplifying African voices.</p>
+      </div>
+    </footer>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

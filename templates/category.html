@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Technology Articles - AfriBlog</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="logo">AfriBlog</div>
+
+      <!-- The Hamburger Icon -->
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li>
+            <a href="{% url 'categories' %}" class="active">Categories</a>
+          </li>
+          <li><a href="{% url 'write' %}" class="btn btn-primary">Write</a></li>
+        </ul>
+      </nav>
+      <button id="theme-toggle" class="btn btn-outline">
+        <span class="icon">🌙</span> Dark Mode
+      </button>
+    </header>
+
+    <main class="category-layout">
+      <header class="page-header">
+        <h1>Explore Categories</h1>
+        <p>Discover insights across the African tech ecosystem.</p>
+
+        <div class="filter-chips">
+            <a href="{% url 'categories' %}" class="chip active">All</a>
+  
+            {% for category in categories %}
+                <a href="{% url 'category_detail' category.slug %}" class="chip">
+                 {{ category.name }}
+                  <span class="post-count-badge">{{ category.num_posts }}</span>
+                </a>
+            {% endfor %}
+        </div>
+
+      <section class="latest-articles">
+        <div class="article-grid"></div>
+
+        <div class="pagination">
+          <button class="btn btn-outline">&larr; Previous</button>
+          <span>Page 1 of 4</span>
+          <button class="btn btn-outline">Next &rarr;</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-logo">AfriBlog</div>
+        <p>&copy; 2026 AfriBlog. Amplifying African voices.</p>
+      </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

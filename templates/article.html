@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Dynamic Title -->
+    <title>{{ post.title }} - AfriBlog</title>
+    <!-- Use static tag for CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- ... header navigation ... -->
+
+    <header class="main-header">
+        <div class="logo">
+               <a href="{% url 'home' %}">AfriBlog</a>
+        </div>
+       <nav>
+            <ul class="nav-links">
+             <li><a href="{% url 'home' %}">Home</a></li>
+             <li><a href="{% url 'categories' %}">Categories</a></li>
+             <li><a href="{% url 'write' %}" class="btn-primary">Write</a></li>
+            </ul>
+       </nav>
+
+        <button id="theme-toggle" class="btn btn-outline">
+             <span class="icon">🌙</span> Dark Mode
+        </button>
+    </header>
+
+    <main class="article-layout">
+        <article class="full-article">
+            <!-- Dynamic Category -->
+            <span class="category-chip">{{ post.category.name }}</span>
+            <h1>{{ post.title }}</h1>
+            
+            <figure class="article-main-image">
+                <!-- Dynamic Image -->
+                {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                {% endif %}
+            </figure>
+
+            <div class="article-body">
+                <!-- Dynamic Content -->
+                {{ post.content|linebreaks }}
+            </div>
+            
+            <!-- ... comments/sidebar ... -->
+        </article>
+
+        <aside class="author-sidebar">
+            <div class="author-bio-card">
+                <h3>{{ post.author.username }}</h3>
+                <p>Senior editor and cultural critic.</p>
+                <!-- ... share buttons ... -->
+            </div>
+        </aside>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">AfriBlog</div>
+            <p>&copy; 2026 AfriBlog. Amplifying African voices.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

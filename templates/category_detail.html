@@ -1,0 +1,49 @@
+{% extends 'index.html' %} 
+
+{% block content %}
+<main class="category-page" style="padding: 40px">
+    <h1>Category: {{ category.name }}</h1>
+
+    <p>Found {{ page_obj.paginator.count }} posts.</p>
+
+    <div class="article-grid">
+        {% for post in page_obj %}
+        <article class="article-card">
+            <a href="{{ post.get_absolute_url }}">
+                <figure class="card-thumbnail">
+                    {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                    {% else %}
+                        <div class="placeholder-thumbnail" style="background: #eee; height: 200px; display: flex; align-items: center; justify-content: center;">
+                            <span>No Image Available</span>
+                        </div>
+                    {% endif %}
+                </figure>
+            </a>
+
+            <div class="card-content">
+                <span class="category-chip">{{ category.name }}</span>
+                <a href="{{ post.get_absolute_url }}">
+                    <h2>{{ post.title }}</h2>
+                </a>
+                <p class="excerpt">{{ post.excerpt }}</p>
+            </div>
+        </article>
+        {% empty %}
+            <p>No posts found in this category.</p>
+        {% endfor %}
+    </div>
+
+    <div class="pagination" style="text-align: center; margin-top: 40px;">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn">← Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn">Next →</a>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

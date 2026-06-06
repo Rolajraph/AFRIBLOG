@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% block content %}
+<main class="article-layout">
+  <article class="single-post">
+    <h2>Edit Comment</h2>
+    <form method="post">
+      {% csrf_token %}
+      <textarea name="content" required>{{ comment.content }}</textarea>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="{% url 'post_detail' comment.post.slug %}" class="btn">Cancel</a>
+    </form>
+  </article>
+</main>
+{% endblock %}

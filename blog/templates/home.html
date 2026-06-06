@@ -1,0 +1,27 @@
+<main class="homepage-layout">
+    {% if featured_post %}
+    <section class="hero-section" style="background-image: url('path/to/your/background-image.jpg');">
+        <div class="hero-content">
+            <span class="badge">FEATURED</span>
+            <h1><a href="{{ featured_post.get_absolute_url }}">{{ featured_post.title }}</a></h1>
+            <p class="author-line">By {{ featured_post.author.get_full_name|default:featured_post.author.username }} • {{ featured_post.created_on|date:"M d, Y" }}</p>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="latest-stories">
+        <h2>Latest Stories</h2>
+        <hr class="section-divider">
+        
+        <div class="stories-grid">
+            {% for post in latest_stories %}
+                <article class="story-card">
+                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <p class="author-line">By {{ post.author.get_full_name|default:post.author.username }}</p>
+                </article>
+            {% empty %}
+                <p>No new stories published yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+</main>
