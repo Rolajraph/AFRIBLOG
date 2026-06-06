@@ -24,8 +24,12 @@ Virtual environment tool (e.g., venv)
 Installation Steps
 Clone the repository:
 
-git clone [your-repository-url]
+git clone [(https://github.com/Rolajraph/AFRIBLOG)]
 cd AFRIBLOG
+
+Demo Presentation
+Check out the project in action here:
+[Link to your demo presentation video]
 
 
 2.  **Create and activate a virtual environment:**
